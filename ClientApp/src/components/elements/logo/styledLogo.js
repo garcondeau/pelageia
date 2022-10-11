@@ -23,4 +23,8 @@ export const StyledLogoWrapper = styled(NavLink)`
     height: 100%;
     transition: 0.5s;
   }
+
+  span {
+    transition: opacity 0.25s
+  }
 `;
