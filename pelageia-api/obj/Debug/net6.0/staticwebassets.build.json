@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "aSmAKILTS4A0x/x9gmfQ0I8oI1GLIjaTbw7x4cHwMAk=",
+  "Source": "pelageia-api",
+  "BasePath": "_content/pelageia-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
