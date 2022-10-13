@@ -1,14 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    </React.StrictMode>,
-    document.getElementById('root')
+    <FluentProvider theme={webLightTheme}>
+      <App />
+    </FluentProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
