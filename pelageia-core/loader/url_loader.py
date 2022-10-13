@@ -3,7 +3,6 @@ import os
 from utils.consts import PATHS
 
 
-
 class url_loader:
     @staticmethod
     def get_file(supplier, url, file_name):
