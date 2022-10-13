@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace pelageia_api.Models
 {
     public class ProviderFile
@@ -10,7 +12,7 @@ namespace pelageia_api.Models
         public char Separator { get; set; } = ';';
         public string UseCols { get; set; } = string.Empty;
         public string Columns { get; set; } = string.Empty;
-
+        [ForeignKey("ProviderId")]
         public Provider Provider { get; set; }
     }
 }

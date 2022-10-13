@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace pelageia_api.Models
@@ -11,7 +12,7 @@ namespace pelageia_api.Models
         public string WhereQuery { get; set; } = string.Empty;
 
         public List<ProviderFile> ProviderFiles { get; set; }
-        [JsonIgnore]
-        public User User {get; set;}
+        [ForeignKey("User_Id")]
+        public User? User {get; set;}
     }
 }

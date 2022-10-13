@@ -14,7 +14,7 @@ namespace pelageia_api.Models
         public DateTime CreatedAt { get; set; }
         public int Subscription { get; set; }
 
-        [ForeignKey("CategoryId")]
-        public List<Provider> Providers { get; set; }
+        [JsonIgnore]
+        public List<Provider> Providers { get; set; } = new();
     }
 }

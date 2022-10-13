@@ -35,4 +35,34 @@ public class UserController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(await _context.Users.ToListAsync());
     }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(User request)
+    {
+        var user = await _context.Users.FindAsync(request.Id);
+        if (user is null)
+            return BadRequest("User not found");
+
+        user.UserName = request.UserName;
+        user.Phone = request.Phone;
+        user.Email = request.Email;
+        user.Subscription = request.Subscription;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(await _context.Users.ToListAsync());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user is null)
+            return BadRequest("User Not Found");
+            
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+
+        return Ok(await _context.Users.ToListAsync());
+    }
 }
