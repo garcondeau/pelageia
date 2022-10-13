@@ -2,10 +2,12 @@ import React, { Suspense } from 'react';
 import routes from "./routes/routes"
 import LoadRoute from "./routes/loadRoute"
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
+import Header from './components/elements/header/Header';
 
 const App = () => {
     return (
         <Router>
+            <Header/>
             <Suspense fallback="Loading..."/>
             <Switch>
                 {routes.map((route, i) => (
