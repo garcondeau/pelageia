@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pelageia", "pelageia.csproj", "{D3718C1C-4586-436B-828F-163064160468}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pelageia-api", "pelageia-api\pelageia-api.csproj", "{56D1F90E-6895-4F13-B248-C8EC29792360}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "pelageia-core", "pelageia-core\pelageia-core.pyproj", "{B3F407B1-1551-48C9-A88E-47209CA8A7E3}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "pelageia-frontend", "pelageia-frontend\pelageia-frontend.esproj", "{5BC704DB-9021-41B8-86F9-285E0C041B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pelageia-app", "pelageia-app\pelageia-app.csproj", "{C215D2C8-6198-4285-8D26-33C33A75A721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +17,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3718C1C-4586-436B-828F-163064160468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3718C1C-4586-436B-828F-163064160468}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3718C1C-4586-436B-828F-163064160468}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3718C1C-4586-436B-828F-163064160468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D1F90E-6895-4F13-B248-C8EC29792360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D1F90E-6895-4F13-B248-C8EC29792360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D1F90E-6895-4F13-B248-C8EC29792360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D1F90E-6895-4F13-B248-C8EC29792360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3F407B1-1551-48C9-A88E-47209CA8A7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F407B1-1551-48C9-A88E-47209CA8A7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC704DB-9021-41B8-86F9-285E0C041B45}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C215D2C8-6198-4285-8D26-33C33A75A721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C215D2C8-6198-4285-8D26-33C33A75A721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C215D2C8-6198-4285-8D26-33C33A75A721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C215D2C8-6198-4285-8D26-33C33A75A721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8DF8C067-CB10-4E0E-95DB-E15F82BEF07B}
+		SolutionGuid = {2F82F886-DF92-46E7-A84F-D936DAC59718}
 	EndGlobalSection
 EndGlobal
