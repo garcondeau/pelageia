@@ -12,8 +12,8 @@ using pelageia_api.Data;
 namespace pelageia_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221013115406_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221013143310_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,7 +42,7 @@ namespace pelageia_api.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int?>("User_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("WhereQuery")
@@ -51,7 +51,7 @@ namespace pelageia_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("Providers");
                 });
@@ -140,9 +140,7 @@ namespace pelageia_api.Migrations
                 {
                     b.HasOne("pelageia_api.Models.User", "User")
                         .WithMany("Providers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("User_Id");
 
                     b.Navigation("User");
                 });

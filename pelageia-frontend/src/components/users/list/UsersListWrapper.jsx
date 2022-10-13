@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import MainTitle from "../../elements/styledTitle/MainTitle";
 import { subscriptions, roles } from "../../../utils/consts";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
@@ -25,29 +26,21 @@ import {
 import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const UsersListWrapper = () => {
-  const [data, setData] = useState([
-    {
-      id: "1",
-      user_name: "John Doe",
-      role: "client",
-      email: "johndoe@gmail.com",
-      is_active: false,
-      phone: "+48123456789",
-      created_at: "13.10.2022",
-      subscription: 1,
-    },
-    {
-      id: "2",
-      user_name: "Jane Doe",
-      role: "client",
-      email: "janedoe@gmail.com",
-      is_active: true,
-      phone: "+48987654321",
-      created_at: "13.10.2022",
-      subscription: 2,
-    },
-  ]);
+  const [data, setData] = useState();
 
+  const fetchUsers = () => {
+    axios
+      .get("https://localhost:4000/api/User")
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   return (
     <StyledUsersContainer>
       <MainTitle text="Users list" />
@@ -67,17 +60,17 @@ const UsersListWrapper = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((user, key) => (
+          {data && data.map((user, key) => (
             <TableRow key={key}>
               <TableCell>
-                <Switch checked={user.is_active} />
+                <Switch checked={user.isActive} />
               </TableCell>
               <TableCell>{user.id}</TableCell>
-              <TableCell>{user.user_name}</TableCell>
+              <TableCell>{user.userName}</TableCell>
               <TableCell>{roles[user.role]}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.created_at}</TableCell>
+              <TableCell>{user.createdAt}</TableCell>
               <TableCell>{subscriptions[user.subscription]}</TableCell>
               <TableCell className="table-action">
                 <Menu>

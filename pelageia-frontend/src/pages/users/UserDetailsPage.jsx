@@ -1,9 +1,9 @@
 import React from "react";
 import UserDetailsWrapper from "../../components/users/details/UserDetailsWrapper";
 
-const UserDetailsPage = () => {
+const UserDetailsPage = ({match}) => {
     return(
-        <UserDetailsWrapper/>
+        <UserDetailsWrapper match={match}/>
     )
 }
 
