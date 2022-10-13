@@ -30,9 +30,6 @@ namespace pelageia_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -40,7 +37,10 @@ namespace pelageia_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("User_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("WhereQuery")
@@ -49,7 +49,7 @@ namespace pelageia_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("Providers");
                 });
@@ -138,9 +138,7 @@ namespace pelageia_api.Migrations
                 {
                     b.HasOne("pelageia_api.Models.User", "User")
                         .WithMany("Providers")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("User_Id");
 
                     b.Navigation("User");
                 });

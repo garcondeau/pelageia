@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace pelageia_api.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,21 +34,20 @@ namespace pelageia_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User_Id = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     SelectQuery = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WhereQuery = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    User_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Providers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Providers_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Providers_Users_User_Id",
+                        column: x => x.User_Id,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -82,9 +81,9 @@ namespace pelageia_api.Migrations
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Providers_UserId",
+                name: "IX_Providers_User_Id",
                 table: "Providers",
-                column: "UserId");
+                column: "User_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
