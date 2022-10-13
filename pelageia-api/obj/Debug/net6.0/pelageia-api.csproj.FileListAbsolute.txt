@@ -155,3 +155,6 @@ C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\netcoreapp3
 C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\netcoreapp3.1\pelageia-api.pdb
 C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\netcoreapp3.1\pelageia-api.genruntimeconfig.cache
 >>>>>>> d4d3b8f1dccb8030408d3b469465ade6f29fa0c6:pelageia-api/obj/Debug/netcoreapp3.1/pelageia-api.csproj.FileListAbsolute.txt
+C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\net6.0\pelageia-api.dll
+C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\net6.0\refint\pelageia-api.dll
+C:\Users\garcondeau\OneDrive\Documents\source\pelageia-api\obj\Debug\net6.0\pelageia-api.pdb
