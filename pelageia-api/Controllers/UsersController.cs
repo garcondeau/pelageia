@@ -5,10 +5,10 @@ namespace pelageia_api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public UserController(AppDbContext context)
+    public UsersController(AppDbContext context)
     {
         _context = context;
     }
@@ -31,6 +31,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Insert(User user)
     {
+        user.CreatedAt = DateTime.Now;
         _context.Add(user);
         await _context.SaveChangesAsync();
         return Ok(await _context.Users.ToListAsync());
@@ -47,6 +48,8 @@ public class UserController : ControllerBase
         user.Phone = request.Phone;
         user.Email = request.Email;
         user.Subscription = request.Subscription;
+        user.IsActive = request.IsActive;
+
 
         await _context.SaveChangesAsync();
 
