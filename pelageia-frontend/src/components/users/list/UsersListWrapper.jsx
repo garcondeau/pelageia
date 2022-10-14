@@ -4,6 +4,7 @@ import MainTitle from "../../elements/styledTitle/MainTitle";
 import { subscriptions, roles } from "../../../utils/consts";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
+import { DateToFormat } from "../../../utils/dateFormat";
 
 import { StyledUsersContainer } from "../styledUsers";
 import {
@@ -30,9 +31,9 @@ const UsersListWrapper = () => {
 
   const fetchUsers = () => {
     axios
-      .get("https://localhost:4000/api/User")
+      .get("/api/User")
       .then((response) => {
-        setData(response.data)
+        setData(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -60,39 +61,40 @@ const UsersListWrapper = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data && data.map((user, key) => (
-            <TableRow key={key}>
-              <TableCell>
-                <Switch checked={user.isActive} />
-              </TableCell>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.userName}</TableCell>
-              <TableCell>{roles[user.role]}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.createdAt}</TableCell>
-              <TableCell>{subscriptions[user.subscription]}</TableCell>
-              <TableCell className="table-action">
-                <Menu>
-                  <MenuTrigger>
-                    <MenuButton
-                      icon={<MoreVertical24Regular />}
-                      appearance="subtle"
-                      shape="circular"
-                    />
-                  </MenuTrigger>
-                  <MenuPopover>
-                    <MenuList>
-                      <NavLink to={`/panel/users/${user.id}`}>
-                        <MenuItem>Details</MenuItem>
-                      </NavLink>
-                      <MenuItem>Delete</MenuItem>
-                    </MenuList>
-                  </MenuPopover>
-                </Menu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {data &&
+            data.map((user, key) => (
+              <TableRow key={key}>
+                <TableCell>
+                  <Switch checked={user.isActive} />
+                </TableCell>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>{roles[user.role]}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
+                <TableCell>{DateToFormat(user.createdAt)}</TableCell>
+                <TableCell>{subscriptions[user.subscription]}</TableCell>
+                <TableCell className="table-action">
+                  <Menu>
+                    <MenuTrigger>
+                      <MenuButton
+                        icon={<MoreVertical24Regular />}
+                        appearance="subtle"
+                        shape="circular"
+                      />
+                    </MenuTrigger>
+                    <MenuPopover>
+                      <MenuList>
+                        <NavLink to={`/panel/users/${user.id}`}>
+                          <MenuItem>Details</MenuItem>
+                        </NavLink>
+                        <MenuItem>Delete</MenuItem>
+                      </MenuList>
+                    </MenuPopover>
+                  </Menu>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </StyledUsersContainer>
