@@ -8,8 +8,7 @@ export const StyledUsersContainer = styled(StyledContainer)`
     grid-gap: 15px;
   }
   .user-providers-table {
-    max-width: 800px;
-    width: 100%;
+    background: transparent;
   }
   .card-divider {
     margin: 20px 0;
@@ -21,9 +20,14 @@ export const StyledUserCard = styled.div`
   width: 100%;
   margin: 30px auto 0;
   display: flex;
+  grid-gap: 25px;
   flex-flow: column nowrap;
 
   .user {
+    &__prop {
+      display: flex;
+      flex-direction: column;
+    }
     &__info {
       display: flex;
       grid-gap: 16px;
@@ -80,4 +84,7 @@ export const StyledUserProp = styled(AccordionItem)`
   background-color: rgb(255, 255, 255);
   box-shadow: rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px,
     rgb(0 0 0 / 11%) 0px 0.3px 0.9px 0px;
+  &:hover {
+    background-color: rgb(232, 232, 232);
+  }
 `;

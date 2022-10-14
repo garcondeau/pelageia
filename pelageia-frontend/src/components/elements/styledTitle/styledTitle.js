@@ -17,11 +17,11 @@ export const StyledTitleWrapper = styled.div`
     /* text-shadow: 0 3px 3px rgba(50 49 48 / 20%); */
   }
 
-  /* &:before { */
-    /* content: ""; */
-    /* width: 6px; */
-    /* height: 30px; */
-    /* background: #0f6cbd; */
+  &:before {
+    content: "";
+    width: 6px;
+    height: 30px;
+    background: #0f6cbd;
     /* box-shadow: 0 3px 3px 1px rgba(15, 108, 189, 0.2); */
-  /* } */
+  }
 `;

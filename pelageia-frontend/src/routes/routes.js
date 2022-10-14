@@ -16,7 +16,7 @@ const routes = [
         menu: true
     },
     {
-        title: "Users",
+        title: "Users list",
         path: "/panel/users",
         exact: true,
         component: UsersPage,

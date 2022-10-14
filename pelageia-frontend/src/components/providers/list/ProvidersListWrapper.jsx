@@ -39,9 +39,9 @@ const ProvidersListWrapper = () => {
       });
   };
 
-  // useEffect(() => {
-  //     fetchProviders()
-  // }, [])
+  useEffect(() => {
+      fetchProviders()
+  }, [])
   return (
     <StyledProvidersContainer>
       <MainTitle text="Providers list" />

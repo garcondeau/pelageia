@@ -31,7 +31,7 @@ const UsersListWrapper = () => {
 
   const fetchUsers = () => {
     axios
-      .get("/api/User")
+      .get("/api/Users")
       .then((response) => {
         setData(response.data);
       })

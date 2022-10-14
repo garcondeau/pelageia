@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <StyledLogoWrapper>
       <GridDots20Filled/>
-      <span>Pelageia Panel</span>
+      <span>Pelageia 6 Panel</span>
     </StyledLogoWrapper>
   );
 };
