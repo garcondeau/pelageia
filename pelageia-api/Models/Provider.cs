@@ -7,6 +7,9 @@ namespace pelageia_api.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool Active { get; set; }
         public bool Deleted { get; set; }
         public string SelectQuery { get; set; } = string.Empty;
         public string? WhereQuery { get; set; }
@@ -15,6 +18,6 @@ namespace pelageia_api.Models
         public List<ProviderFile>? ProviderFiles { get; set; }
         [JsonIgnore]
         [ForeignKey("UserId")]
-        public User? User {get; set;}
+        public User? User { get; set; }
     }
 }

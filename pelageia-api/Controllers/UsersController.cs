@@ -56,6 +56,20 @@ public class UsersController : ControllerBase
         return Ok(await _context.Users.ToListAsync());
     }
 
+    [HttpPut("change_active/{id}")]
+        public async Task<IActionResult> ChangeUserActive(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user is null)
+                return BadRequest("Provider not found");
+            user.IsActive = !user.IsActive;
+
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Users.ToListAsync());
+        }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

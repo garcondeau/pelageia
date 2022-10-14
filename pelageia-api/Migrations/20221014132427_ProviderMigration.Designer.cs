@@ -12,8 +12,8 @@ using pelageia_api.Data;
 namespace pelageia_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221013115406_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221014132427_ProviderMigration")]
+    partial class ProviderMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,18 @@ namespace pelageia_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SelectQuery")
                         .IsRequired()
@@ -42,11 +52,7 @@ namespace pelageia_api.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("WhereQuery")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
