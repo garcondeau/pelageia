@@ -62,3 +62,5 @@ const ProvidersDetailsWrapper = ({ match }) => {
     </StyledProvidersContainer>
   );
 };
+
+export default ProvidersDetailsWrapper;

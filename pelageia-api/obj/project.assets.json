@@ -2194,9 +2194,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\pelageia-api.csproj",
-      "projectName": "pelageia-api",
-      "projectPath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\pelageia-api.csproj",
+      "projectUniqueName": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\PelageiaAPI.csproj",
+      "projectName": "PelageiaAPI",
+      "projectPath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\PelageiaAPI.csproj",
       "packagesPath": "C:\\Users\\garcondeau\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\obj\\",
       "projectStyle": "PackageReference",

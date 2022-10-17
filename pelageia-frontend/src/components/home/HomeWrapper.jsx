@@ -12,7 +12,8 @@ import {
 } from "@fluentui/react-components/unstable";
 
 const HomeWrapper = () => {
-  return (
+  
+    return (
     <StyledTopSection>
       <StyledHomeContainer>
         <StyledBackgroundImage src={image1}/>

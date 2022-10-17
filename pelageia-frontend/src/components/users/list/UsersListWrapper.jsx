@@ -15,6 +15,7 @@ import {
   MenuList,
   MenuItem,
   MenuTrigger,
+  Spinner,
 } from "@fluentui/react-components";
 import {
   Table,
@@ -28,17 +29,43 @@ import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const UsersListWrapper = () => {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const fetchUsers = () => {
+    setLoading(true);
     axios
       .get("/api/Users")
       .then((response) => {
         setData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   };
+
+  const setUserStatus = (id) => {
+    axios
+    .put(`/api/Users/change_active/${id}`)
+    .then((response) => {
+      if (response.status == "200") {
+        console.log("Status changed");
+        setDisabled(false);
+      }
+      else {
+        fetchUsers();
+      }
+    })
+  };
+
+  const handleStatus = ({ e, user }) => {
+    setDisabled(true);
+    console.log(user)
+    setUserStatus(user);
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -46,26 +73,31 @@ const UsersListWrapper = () => {
     <StyledUsersContainer>
       <MainTitle text="Users list" />
       <Breadcrumbs current="Users" />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Active</TableHeaderCell>
-            <TableHeaderCell>UID</TableHeaderCell>
-            <TableHeaderCell>User name</TableHeaderCell>
-            <TableHeaderCell>User role</TableHeaderCell>
-            <TableHeaderCell>Email</TableHeaderCell>
-            <TableHeaderCell>Phone number</TableHeaderCell>
-            <TableHeaderCell>Registration date</TableHeaderCell>
-            <TableHeaderCell>Subscription</TableHeaderCell>
-            <TableHeaderCell className="table-action" />
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data &&
-            data.map((user, key) => (
+      {loading && <Spinner labelPosition="below" size="medium" label="Loading" />}
+      {!loading && data && (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>Active</TableHeaderCell>
+              <TableHeaderCell>UID</TableHeaderCell>
+              <TableHeaderCell>User name</TableHeaderCell>
+              <TableHeaderCell>User role</TableHeaderCell>
+              <TableHeaderCell>Email</TableHeaderCell>
+              <TableHeaderCell>Phone number</TableHeaderCell>
+              <TableHeaderCell>Registration date</TableHeaderCell>
+              <TableHeaderCell>Subscription</TableHeaderCell>
+              <TableHeaderCell className="table-action" />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((user, key) => (
               <TableRow key={key}>
                 <TableCell>
-                  <Switch checked={user.isActive} />
+                  <Switch
+                    disabled={disabled}
+                    onChange={(event) => handleStatus({e: event, user: user.id})}
+                    defaultChecked={user.isActive}
+                  />
                 </TableCell>
                 <TableCell>{user.id}</TableCell>
                 <TableCell>{user.userName}</TableCell>
@@ -95,8 +127,9 @@ const UsersListWrapper = () => {
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      )}
     </StyledUsersContainer>
   );
 };

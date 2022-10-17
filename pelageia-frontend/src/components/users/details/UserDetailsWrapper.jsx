@@ -3,6 +3,7 @@ import axios from "axios";
 import { subscriptions, roles, user_status } from "../../../utils/consts";
 import { DateToFormat } from "../../../utils/dateFormat";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
+import { NavLink } from "react-router-dom";
 
 import {
   StyledList,
@@ -30,7 +31,8 @@ import {
   MenuButton,
   MenuPopover,
   MenuList,
-  MenuItem
+  MenuItem,
+  Spinner,
 } from "@fluentui/react-components";
 import {
   Table,
@@ -46,17 +48,21 @@ import {
   PersonDelete16Filled,
   PersonInfoFilled,
   GridFilled,
-  MoreVertical24Regular
+  MoreVertical24Regular,
 } from "@fluentui/react-icons";
 
 const UserDetailsWrapper = ({ match }) => {
   const [data, setData] = useState();
   const [providers, setProviders] = useState();
+  const [loading, setLoading] = useState(false);
+
   const fetchUsers = () => {
+    setLoading(true);
     axios
       .get("/api/Users/" + match.params.id)
       .then((response) => {
         setData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -64,7 +70,7 @@ const UserDetailsWrapper = ({ match }) => {
   };
   const fetchProviders = () => {
     axios
-      .get("/api/Providers")
+      .get("/api/Providers/user/" + match.params.id)
       .then((response) => {
         setProviders(response.data);
       })
@@ -82,7 +88,8 @@ const UserDetailsWrapper = ({ match }) => {
         previous="Users"
         link="/panel/users"
       />
-      {data && (
+      {loading && <Spinner labelPosition="below" size="medium" label="Loading" />}
+      {!loading && data && (
         <StyledUserCard className="user">
           <StyledUserPreview>
             <div className="user__info">
@@ -194,40 +201,55 @@ const UserDetailsWrapper = ({ match }) => {
                 </div>
               </AccordionHeader>
               <AccordionPanel>
-                <Table className="user-providers-table">
-                  <TableHeader>
-                    <TableRow>
-                      <TableHeaderCell>Provider name</TableHeaderCell>
-                      <TableHeaderCell>Creation date</TableHeaderCell>
-                      <TableHeaderCell className="table-action" />
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {providers && providers.map((provider, key) => (
-                      <TableRow key={key}>
-                        <TableCell>{provider.id}</TableCell>
-                        <TableCell>{provider.selectQuery}</TableCell>
-                        <TableCell className="table-action">
-                          <Menu>
-                            <MenuTrigger>
-                              <MenuButton
-                                icon={<MoreVertical24Regular />}
-                                appearance="subtle"
-                                shape="circular"
-                              />
-                            </MenuTrigger>
-                            <MenuPopover>
-                              <MenuList>
-                                <MenuItem>Details</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                              </MenuList>
-                            </MenuPopover>
-                          </Menu>
-                        </TableCell>
+                {!providers && (
+                  <Spinner
+                    labelPosition="below"
+                    size="small"
+                    label="Loading user providers"
+                  />
+                )}
+                {providers && (
+                  <Table className="user-providers-table">
+                    <TableHeader>
+                      <TableRow>
+                        <TableHeaderCell>Provider name</TableHeaderCell>
+                        <TableHeaderCell>Creation date</TableHeaderCell>
+                        <TableHeaderCell className="table-action" />
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {providers.map((provider, key) => (
+                        <TableRow key={key}>
+                          <TableCell>{provider.name}</TableCell>
+                          <TableCell>
+                            {DateToFormat(provider.createdAt)}
+                          </TableCell>
+                          <TableCell className="table-action">
+                            <Menu>
+                              <MenuTrigger>
+                                <MenuButton
+                                  icon={<MoreVertical24Regular />}
+                                  appearance="subtle"
+                                  shape="circular"
+                                />
+                              </MenuTrigger>
+                              <MenuPopover>
+                                <MenuList>
+                                  <NavLink
+                                    to={"/panel/providers/" + provider.id}
+                                  >
+                                    Details
+                                  </NavLink>
+                                  <MenuItem>Delete</MenuItem>
+                                </MenuList>
+                              </MenuPopover>
+                            </Menu>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
               </AccordionPanel>
             </StyledUserProp>
           </Accordion>

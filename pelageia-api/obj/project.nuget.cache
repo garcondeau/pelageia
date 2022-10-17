@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jOLBijixFzrrznVMPVYPPfkp9+X8IdEV7ltfxHvqbxPN6nwy/sVsK29U909anMlMz5Ix3ardpBqzjoybD/CJ9g==",
+  "dgSpecHash": "qLXx8wKnxpnNmx1WN5BMhlY9HxEdKnc+rtTze831Q/tufFdaCTcZv2H/MrLN1qByE8PqrXHKD3QyCBltI2uZLg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\pelageia-api.csproj",
+  "projectFilePath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\PelageiaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\garcondeau\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\garcondeau\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
