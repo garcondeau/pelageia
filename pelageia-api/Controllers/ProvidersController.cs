@@ -23,7 +23,7 @@ namespace pelageia_api.Controllers
         [HttpGet("user/{userId}")]
         public ActionResult GetUserProviders(int userId)
         {
-            return Ok(_context.Providers.Select(p => p.UserId == userId));
+            return Ok(_context.Providers.Where(p => p.UserId == userId));
         }
 
         [HttpGet("{id}")]

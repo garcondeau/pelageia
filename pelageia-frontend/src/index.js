@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { FluentProvider, webLightTheme } from '@fluentui/react-components';
+import { FluentProvider } from "@fluentui/react-components";
+import { defaultLightTheme } from "./utils/theme.ts";
 
 ReactDOM.render(
   <React.StrictMode>
-    <FluentProvider theme={webLightTheme}>
+    <FluentProvider theme={defaultLightTheme}>
       <App />
     </FluentProvider>
   </React.StrictMode>,

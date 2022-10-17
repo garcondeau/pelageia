@@ -10,14 +10,14 @@ import {
   StyledHeaderMenuItem,
 } from "./styledHeader";
 import { Button } from "@fluentui/react-components";
-import { Person28Regular } from "@fluentui/react-icons";
+import { Person24Regular } from "@fluentui/react-icons";
 
 const Header = () => {
   return (
     <StyledHeaderWrapper>
       <StyledHeaderContainer>
-        <Logo />
         <StyledHeaderMenu>
+          <Logo />
           {routes.map((route, key) => (
             <StyledHeaderMenuItem key={key}>
               {route.menu && (
@@ -28,7 +28,12 @@ const Header = () => {
             </StyledHeaderMenuItem>
           ))}
         </StyledHeaderMenu>
-        <Button shape="circular" className="login-btn" appearance="transparent" icon={<Person28Regular />}/>
+        <Button
+          shape="circular"
+          className="login-btn"
+          appearance="transparent"
+          icon={<Person24Regular />}
+        />
       </StyledHeaderContainer>
     </StyledHeaderWrapper>
   );
