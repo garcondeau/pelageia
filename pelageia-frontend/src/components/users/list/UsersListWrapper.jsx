@@ -71,7 +71,6 @@ const UsersListWrapper = () => {
   }, []);
   return (
     <StyledUsersContainer>
-      <MainTitle text="Users list" />
       <Breadcrumbs current="Users" />
       {loading && <Spinner labelPosition="below" size="medium" label="Loading" />}
       {!loading && data && (

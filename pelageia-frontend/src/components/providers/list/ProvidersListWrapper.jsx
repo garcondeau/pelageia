@@ -14,6 +14,7 @@ import {
   MenuList,
   MenuItem,
   MenuTrigger,
+  Spinner,
 } from "@fluentui/react-components";
 import {
   Table,
@@ -27,46 +28,104 @@ import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const ProvidersListWrapper = () => {
   const [data, setData] = useState();
+  const [users, setUsers] = useState();
+  const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const fetchProviders = () => {
+    setLoading(true);
     axios
       .get("/api/Providers")
       .then((response) => {
         setData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   };
 
+  const fetchUsers = () => {
+    setLoading(true);
+    axios
+      .get("/api/Users")
+      .then((response) => {
+        setUsers(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+  const setProviderStatus = (id) => {
+    axios.put(`/api/Providers/change_active/${id}`).then((response) => {
+      if (response.status == "200") {
+        console.log("Status changed");
+        setDisabled(false);
+      } else {
+        fetchUsers();
+      }
+    });
+  };
+
+  const handleStatus = ({ e, provider }) => {
+    setDisabled(true);
+    console.log(provider);
+    setProviderStatus(provider);
+  };
+
   useEffect(() => {
-      fetchProviders()
-  }, [])
+    fetchProviders();
+  }, []);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   return (
     <StyledProvidersContainer>
-      <MainTitle text="Providers list" />
       <Breadcrumbs current="Providers" />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Active</TableHeaderCell>
-            <TableHeaderCell>ID</TableHeaderCell>
-            <TableHeaderCell>Provider</TableHeaderCell>
-            <TableHeaderCell>User id</TableHeaderCell>
-            <TableHeaderCell>Created at</TableHeaderCell>
-            <TableHeaderCell className="table-action" />
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data &&
-            data.map((provider, key) => (
+      {loading && (
+        <Spinner labelPosition="below" size="medium" label="Loading" />
+      )}
+      {!loading && data && users && (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>Active</TableHeaderCell>
+              <TableHeaderCell>ID</TableHeaderCell>
+              <TableHeaderCell>Provider</TableHeaderCell>
+              <TableHeaderCell>User</TableHeaderCell>
+              <TableHeaderCell>Created at</TableHeaderCell>
+              <TableHeaderCell className="table-action" />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((provider, key) => (
               <TableRow key={key}>
                 <TableCell>
-                  <Switch checked={provider.isActive} />
+                  <Switch
+                    onChange={(event) =>
+                      handleStatus({ e: event, provider: provider.id })
+                    }
+                    disabled={disabled}
+                    defaultChecked={provider.active}
+                  />
                 </TableCell>
                 <TableCell>{provider.id}</TableCell>
                 <TableCell>{provider.name}</TableCell>
-                <TableCell>{provider.userId}</TableCell>
+                {users.map((user, key) => (
+                  <>
+                    {user.id === provider.userId && (
+                      <TableCell key={key}>
+                        <NavLink to={`/panel/users/${provider.userId}`}>
+                          {user.userName}
+                        </NavLink>
+                      </TableCell>
+                    )}
+                  </>
+                ))}
                 <TableCell>{DateToFormat(provider.createdAt)}</TableCell>
                 <TableCell className="table-action">
                   <Menu>
@@ -89,8 +148,9 @@ const ProvidersListWrapper = () => {
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      )}
     </StyledProvidersContainer>
   );
 };

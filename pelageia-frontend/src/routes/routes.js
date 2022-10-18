@@ -4,6 +4,8 @@ import UsersPage from "../pages/users/UsersPage";
 import UsersDetailsPage from "../pages/users/UserDetailsPage";
 import ProvidersPage from "../pages/providers/ProvidersPage";
 import ProvidersDetailsPage from "../pages/providers/ProvidersDetailsPage";
+import LoginPage from "../pages/auth/LoginPage";
+import RegisterPage from "../pages/auth/RegisterPage";
 
 import { HomeRegular, PeopleRegular } from "@fluentui/react-icons";
 
@@ -44,6 +46,20 @@ const routes = [
         exact: true,
         component: ProvidersDetailsPage,
         menu: false
+    },
+    {
+        title: "Sign in",
+        path: "/login",
+        exact: true,
+        component: LoginPage,
+        menu: false
+    },
+    {
+        title: "Sign up",
+        path: "/register",
+        exact: true,
+        component: RegisterPage,
+        menu: true
     }
 ]
 

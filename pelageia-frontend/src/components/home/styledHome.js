@@ -6,7 +6,7 @@ export const StyledHomeContainer = styled(StyledContainer)`
 `;
 
 export const StyledTopSection = styled.div`
-  height: 600px;
+  height: calc(100vh - 50px);
   position: relative;
   background: linear-gradient(-45deg,rgb(231 72 86 / 20%),rgb(255 140 0 / 20%),rgb(142 140 216 / 20%),rgb(0 120 215 / 20%));
   background-size: 400% 400%;
