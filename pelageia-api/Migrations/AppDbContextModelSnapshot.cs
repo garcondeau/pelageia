@@ -30,28 +30,21 @@ namespace pelageia_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("SelectQuery")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("WhereQuery")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -102,6 +95,32 @@ namespace pelageia_api.Migrations
                     b.ToTable("ProviderFiles");
                 });
 
+            modelBuilder.Entity("pelageia_api.Models.ProviderQuery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectQuery")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhereQuery")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId")
+                        .IsUnique();
+
+                    b.ToTable("ProviderQuery");
+                });
+
             modelBuilder.Entity("pelageia_api.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -120,20 +139,37 @@ namespace pelageia_api.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<int>("Subscription")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TokenCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -162,9 +198,23 @@ namespace pelageia_api.Migrations
                     b.Navigation("Provider");
                 });
 
+            modelBuilder.Entity("pelageia_api.Models.ProviderQuery", b =>
+                {
+                    b.HasOne("pelageia_api.Models.Provider", "Provider")
+                        .WithOne("ProviderQuery")
+                        .HasForeignKey("pelageia_api.Models.ProviderQuery", "ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+                });
+
             modelBuilder.Entity("pelageia_api.Models.Provider", b =>
                 {
                     b.Navigation("ProviderFiles");
+
+                    b.Navigation("ProviderQuery")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("pelageia_api.Models.User", b =>

@@ -1,11 +1,13 @@
+using System.Net;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pelageia_api.Models;
 
 namespace pelageia_api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class ProvidersController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -49,9 +51,7 @@ namespace pelageia_api.Controllers
                 return BadRequest("Provider not found");
 
             provider.Name = request.Name;
-            provider.Active = request.Active;
-            provider.SelectQuery = request.SelectQuery;
-            provider.WhereQuery = request.WhereQuery;
+            provider.IsActive = request.IsActive;
 
 
             await _context.SaveChangesAsync();
@@ -65,7 +65,7 @@ namespace pelageia_api.Controllers
             var provider = await _context.Providers.FindAsync(id);
             if (provider is null)
                 return BadRequest("Provider not found");
-            provider.Active = !provider.Active;
+            provider.IsActive = !provider.IsActive;
 
 
             await _context.SaveChangesAsync();

@@ -6,13 +6,18 @@ namespace pelageia_api.Models
     public class User
     {
         public int Id { get; set; }
-        public string Role { get; set; } = "Client";
-        public string UserName { get; set; } = "John Doe";
-        public string Email { get; set; } = "john.doe@sample.mail";
+        public Roles Role { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public bool IsActive { get; set; }
-        public string Phone { get; set; } = "+0123456789";
         public DateTime CreatedAt { get; set; }
         public int Subscription { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime TokenCreated { get; set; }
+        public DateTime TokenExpires { get; set; }
 
         [JsonIgnore]
         public List<Provider> Providers { get; set; } = new();

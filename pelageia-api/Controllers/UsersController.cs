@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pelageia_api.Models;
 
 namespace pelageia_api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]"), Authorize(Roles = "Admin")]
 public class UsersController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -44,7 +45,7 @@ public class UsersController : ControllerBase
         if (user is null)
             return BadRequest("User not found");
 
-        user.UserName = request.UserName;
+        user.Name = request.Name;
         user.Phone = request.Phone;
         user.Email = request.Email;
         user.Subscription = request.Subscription;
