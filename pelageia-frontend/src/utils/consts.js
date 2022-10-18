@@ -22,4 +22,9 @@ const user_status = {
   },
 };
 
-export { subscriptions, roles, user_status };
+const regex = {
+  email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  password: /^[a-zA-Z0-9!@#$%^&*]{6,16}$/
+}
+
+export { subscriptions, roles, user_status, regex };

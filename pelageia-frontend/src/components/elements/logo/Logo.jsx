@@ -2,15 +2,15 @@ import React from "react";
 
 import { StyledLogoWrapper } from "./styledLogo";
 
-import logo from "../../../assets/images/logo.svg";
+import { GridDots20Filled } from "@fluentui/react-icons";
 
 const Logo = () => {
-    return(
-        <StyledLogoWrapper>
-            <img src={logo} alt="Pelageia logo" />
-            <span>Pelageia</span>
-        </StyledLogoWrapper>
-    )
-}
+  return (
+    <StyledLogoWrapper>
+      <GridDots20Filled/>
+      <span>Pelageia 6 Panel</span>
+    </StyledLogoWrapper>
+  );
+};
 
 export default Logo;

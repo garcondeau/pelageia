@@ -2640,19 +2640,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\garcondeau\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\src\\cs\\pelageia\\pelageia-api\\pelageia-api.csproj",
-      "projectName": "pelageia-api",
-      "projectPath": "D:\\src\\cs\\pelageia\\pelageia-api\\pelageia-api.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\src\\cs\\pelageia\\pelageia-api\\obj\\",
+      "projectUniqueName": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\PelageiaAPI.csproj",
+      "projectName": "PelageiaAPI",
+      "projectPath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\PelageiaAPI.csproj",
+      "packagesPath": "C:\\Users\\garcondeau\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\garcondeau\\OneDrive\\Documents\\source\\pelageia-api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\garcondeau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

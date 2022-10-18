@@ -10,7 +10,7 @@ export const StyledBreadcrumbsList = styled.div`
 `;
 
 export const Separator = styled(IosArrowRtl24Regular)`
-  width: 16px;
+  width: 32px;
   height: 16px;
   padding: 0 5px;
 `;
