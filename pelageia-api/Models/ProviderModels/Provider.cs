@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace pelageia_api.Models
+namespace pelageia_api.Models.ProviderModels
 {
     public class Provider
     {
@@ -15,7 +15,7 @@ namespace pelageia_api.Models
         [JsonIgnore]
         public List<ProviderFile>? ProviderFiles { get; set; }
         [JsonIgnore]
-        public ProviderQuery ProviderQuery { get; set; }
+        public ProviderQuery? ProviderQueryId { get; set; }
         [JsonIgnore]
 
         [ForeignKey("UserId")]

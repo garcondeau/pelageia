@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using pelageia_api.Models.ProviderModels;
 using System.Text.Json.Serialization;
 
-namespace pelageia_api.Models
+namespace pelageia_api.Models.UserModels
 {
     public class User
     {
@@ -15,9 +15,7 @@ namespace pelageia_api.Models
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public int Subscription { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime TokenCreated { get; set; }
-        public DateTime TokenExpires { get; set; }
+        public string EmailCode { get; set; }
 
         [JsonIgnore]
         public List<Provider> Providers { get; set; } = new();

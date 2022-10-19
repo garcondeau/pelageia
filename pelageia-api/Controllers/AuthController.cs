@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using pelageia_api.Models;
 using pelageia_api.Dto;
 using System.Security.Cryptography;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
+using pelageia_api.Models;
 
 namespace pelageia_api.Controllers
 {
@@ -36,8 +36,6 @@ namespace pelageia_api.Controllers
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var refereshToken = GenerateRefreshToken();
-
             var user = new User
             {
                 Name = request.Name,
@@ -48,9 +46,7 @@ namespace pelageia_api.Controllers
                 Subscription = 0,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                RefreshToken = refereshToken.Token,
-                TokenCreated = DateTime.Now,
-                TokenExpires = DateTime.Now.AddHours(12)
+                EmailCode = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
             };
 
             _context.Users.Add(user);
@@ -76,36 +72,7 @@ namespace pelageia_api.Controllers
                 return BadRequest("Wrong password.");
             }
 
-            string token = CreateToken(user);
-
-            var refreshToken = GenerateRefreshToken();
-            user.RefreshToken = refreshToken.Token;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(token);
-        }
-
-        [HttpPost("refresh-token"), Authorize]
-        public async Task<ActionResult<string>> RefreshToken()
-        {
-            var refreshToken = Request.Cookies["refreshToken"];
-            var user = _userService.GetMe();
-            var dbUser = await _context.Users.FindAsync(user.Id);
-            
-            if (dbUser is null)
-                return Unauthorized("User not authorized");
-            
-            else if (!dbUser.RefreshToken.Equals(refreshToken))
-                return Unauthorized("Invalid Refresh Token.");
-            
-            else if (user.TokenExpires < DateTime.Now)
-                return Unauthorized("Token Expired.");
-
-
-            string token = CreateToken(user);
-            var newRefreshToken = GenerateRefreshToken();
-            await SetRefreshToken(newRefreshToken);
+            var token = CreateToken(user);
 
             return Ok(token);
         }
@@ -139,11 +106,11 @@ namespace pelageia_api.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim("user_id", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.MobilePhone, user.Phone)
-
+                new Claim(ClaimTypes.MobilePhone, user.Phone),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
@@ -159,42 +126,6 @@ namespace pelageia_api.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
-        }
-        private RefreshToken GenerateRefreshToken()
-        {
-            var refreshToken = new RefreshToken
-            {
-                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.Now.AddHours(12),
-                Created = DateTime.Now
-            };
-
-            return refreshToken;
-        }
-
-        private async Task<IActionResult> SetRefreshToken(RefreshToken newRefreshToken)
-        {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = newRefreshToken.Expires
-            };
-            Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
-
-            var user = _userService.GetMe();
-            
-            var dbUser = await _context.Users.FindAsync(user.Id);
-
-            if (dbUser is null)
-                return BadRequest("User not found");
-
-            dbUser.RefreshToken = newRefreshToken.Token;
-            dbUser.TokenCreated = newRefreshToken.Created;
-            dbUser.TokenExpires = newRefreshToken.Expires;
-            
-            await _context.SaveChangesAsync();
-
-            return Ok(dbUser);
         }
     }
 }
