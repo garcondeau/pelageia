@@ -65,7 +65,6 @@ const ProvidersListWrapper = () => {
   const setProviderStatus = (id) => {
     axios.put(`/api/Providers/change_active/${id}`).then((response) => {
       if (response.status == "200") {
-        console.log("Status changed");
         setDisabled(false);
       } else {
         fetchUsers();
