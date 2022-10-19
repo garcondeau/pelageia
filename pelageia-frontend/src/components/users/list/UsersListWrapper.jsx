@@ -99,7 +99,7 @@ const UsersListWrapper = () => {
                   />
                 </TableCell>
                 <TableCell>{user.id}</TableCell>
-                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.name}</TableCell>
                 <TableCell>{roles[user.role]}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.phone}</TableCell>
