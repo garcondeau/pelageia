@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import validator from "../../utils/validator";
+import { useHistory } from "react-router-dom";
 
 import { Title2, Button, Link } from "@fluentui/react-components";
 import { InputField } from "@fluentui/react-components/unstable";
 import { Eye24Regular, EyeOff24Regular } from "@fluentui/react-icons";
 
 const LoginContainer = () => {
+  const history = useHistory();
   const [type, setType] = useState("password");
   const [errors, setErrors] = useState({
     email: {
@@ -39,7 +41,8 @@ const LoginContainer = () => {
         .post(`/api/Auth/login?email=${errors.email.value}&password=${errors.password.value}`)
         .then((response) => {
           axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`
-          localStorage.setItem("Bearer", response.data)
+          localStorage.setItem("Bearer", response.data);
+          history.push("/");
         })
         .catch((error) => {
           console.log(error);

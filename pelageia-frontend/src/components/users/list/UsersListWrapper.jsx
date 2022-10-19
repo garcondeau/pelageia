@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import MainTitle from "../../elements/styledTitle/MainTitle";
 import { subscriptions, roles } from "../../../utils/consts";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
 import { DateToFormat } from "../../../utils/dateFormat";
+import {AuthContext} from "../../../App";
 
 import { StyledUsersContainer } from "../styledUsers";
 import {
@@ -28,6 +29,7 @@ import {
 import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const UsersListWrapper = () => {
+  const user = useContext(AuthContext)
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -51,7 +53,6 @@ const UsersListWrapper = () => {
     .put(`/api/Users/change_active/${id}`)
     .then((response) => {
       if (response.status == "200") {
-        console.log("Status changed");
         setDisabled(false);
       }
       else {
@@ -62,13 +63,12 @@ const UsersListWrapper = () => {
 
   const handleStatus = ({ e, user }) => {
     setDisabled(true);
-    console.log(user)
     setUserStatus(user);
   };
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [user]);
   return (
     <StyledUsersContainer>
       <Breadcrumbs current="Users" />

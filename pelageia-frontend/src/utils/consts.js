@@ -1,6 +1,7 @@
 import { Badge } from "@fluentui/react-components";
 
 const subscriptions = {
+  0: <Badge appearance="outline" style={{color: "#D13438", borderColor: "#D13438"}}>None</Badge>,
   1: <Badge appearance="outline">Basic</Badge>,
   2: <Badge appearance="tint">Standart</Badge>,
   3: <Badge appearance="filles">Professional</Badge>,
@@ -22,6 +23,7 @@ const roles = {
   3: "Superadmin",
   2: "Administrator",
   1: "Client",
+  0: "Guest"
 };
 
 const user_status = {

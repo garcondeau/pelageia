@@ -1,13 +1,12 @@
 import jwt_decode from "jwt-decode";
 
 const getUserInfo = () => {
-  let token = null;
+  let token = "";
 
-  if (localStorage.getItem("Bearer") !== "") {
+  if (localStorage.getItem("Bearer")) {
     token = jwt_decode(localStorage.getItem("Bearer"));
-    console.log(token);
+    return Object.values(token);
   }
-  return null;
 };
 
 export default getUserInfo;

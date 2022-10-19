@@ -1,5 +1,6 @@
 /.vs/*
 /.vscode/*
-pelageia-api/bin/
-PelageiaAp/obj/
-pelageia-api/obj/
+pelageia-api/obj
+pelageia-api/bin
+PelageiaApp/bin
+PelageiaApp/obj
