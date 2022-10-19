@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace pelageia_api.Models
+namespace pelageia_api.Models.UserModels
 {
     public enum Roles
     {

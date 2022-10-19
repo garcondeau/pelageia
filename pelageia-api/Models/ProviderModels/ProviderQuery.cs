@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pelageia_api.Models
+namespace pelageia_api.Models.ProviderModels
 {
     public class ProviderQuery
     {
@@ -11,6 +11,6 @@ namespace pelageia_api.Models
         public string? WhereQuery { get; set; } = string.Empty;
         
         [ForeignKey("ProviderId")]
-        public Provider Provider { get; set; }
+        public Provider? Provider { get; set; }
     }
 }
