@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import MainTitle from "../../elements/styledTitle/MainTitle";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
 import { DateToFormat } from "../../../utils/dateFormat";
+import {AuthContext} from "../../../App";
 
 import { StyledProvidersContainer } from "../styledProviders";
 import {
@@ -27,6 +28,7 @@ import {
 import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const ProvidersListWrapper = () => {
+  const user = useContext(AuthContext)
   const [data, setData] = useState();
   const [users, setUsers] = useState();
   const [loading, setLoading] = useState(false);
@@ -63,7 +65,6 @@ const ProvidersListWrapper = () => {
   const setProviderStatus = (id) => {
     axios.put(`/api/Providers/change_active/${id}`).then((response) => {
       if (response.status == "200") {
-        console.log("Status changed");
         setDisabled(false);
       } else {
         fetchUsers();
@@ -79,10 +80,10 @@ const ProvidersListWrapper = () => {
 
   useEffect(() => {
     fetchProviders();
-  }, []);
+  }, [user]);
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [user]);
   return (
     <StyledProvidersContainer>
       <Breadcrumbs current="Providers" />

@@ -5,11 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { FluentProvider } from "@fluentui/react-components";
 import { defaultLightTheme } from "./utils/theme.ts";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <FluentProvider theme={defaultLightTheme}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </FluentProvider>
   </React.StrictMode>,
   document.getElementById("root")

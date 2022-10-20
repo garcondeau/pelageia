@@ -1,14 +1,29 @@
 import { Badge } from "@fluentui/react-components";
 
 const subscriptions = {
+  0: <Badge appearance="outline" style={{color: "#D13438", borderColor: "#D13438"}}>None</Badge>,
   1: <Badge appearance="outline">Basic</Badge>,
   2: <Badge appearance="tint">Standart</Badge>,
   3: <Badge appearance="filles">Professional</Badge>,
 };
 
+const responseStatus = {
+  HTTP_OK: 200,
+  HTTP_CREATED: 201,
+  HTTP_NO_CONTENT: 204,
+  HTTP_BAD_REQUEST: 400,
+  HTTP_ERROR_VALIDATION: 422,
+  FORBIDDEN: 403,
+  HTTP_INTERNAL_SERVER_ERROR: 500,
+  HTTP_UNAUTHORIZED: 401,
+  HTTP_CONFLICT: 409
+};
+
 const roles = {
-  admin: "Administrator",
-  client: "Client",
+  3: "Superadmin",
+  2: "Administrator",
+  1: "Client",
+  0: "Guest"
 };
 
 const user_status = {
@@ -27,4 +42,4 @@ const regex = {
   password: /^[a-zA-Z0-9!@#$%^&*]{6,16}$/
 }
 
-export { subscriptions, roles, user_status, regex };
+export { subscriptions, roles, user_status, regex, responseStatus };

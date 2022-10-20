@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { subscriptions, user_status } from "../../../utils/consts";
 import { DateToFormat } from "../../../utils/dateFormat";
+import {AuthContext} from "../../../App";
 
 import { StyledProvidersContainer } from "../styledProviders";
 import { Card, Persona } from "@fluentui/react-components/unstable";
@@ -21,6 +22,7 @@ import {
 } from "../../styled/styledList";
 
 const ProvidersDetailsWrapper = ({ match }) => {
+  const me = useContext(AuthContext)
   const [data, setData] = useState();
   const [user, setUser] = useState();
   const [open, setOpen] = useState(false);
@@ -49,7 +51,7 @@ const ProvidersDetailsWrapper = ({ match }) => {
 
   useEffect(() => {
     fetchProvider();
-  }, []);
+  }, [me]);
   useEffect(() => {
     if (data) {
       fetchUser();

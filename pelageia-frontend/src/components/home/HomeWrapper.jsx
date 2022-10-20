@@ -15,7 +15,7 @@ const HomeWrapper = () => {
   
     return (
     <StyledTopSection>
-      <StyledHomeContainer>
+      {/* <StyledHomeContainer>
         <StyledBackgroundImage src={image1}/>
         <StyledBackgroundImage right="100" bottom="0" src={image2}/>
         <DialogSurface>
@@ -33,7 +33,7 @@ const HomeWrapper = () => {
             </DialogContent>
           </DialogBody>
         </DialogSurface>
-      </StyledHomeContainer>
+      </StyledHomeContainer> */}
     </StyledTopSection>
   );
 };
