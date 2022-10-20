@@ -36,13 +36,13 @@ const LoginContainer = () => {
   };
 
   const tryLogin = () => {
-    if (errors.email.value != "" && errors.password.value != "") {
+    if (errors.email.value !== "" && errors.password.value !== "") {
       axios
         .post(`/api/Auth/login?email=${errors.email.value}&password=${errors.password.value}`)
         .then((response) => {
-          axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`
-          localStorage.setItem("Bearer", response.data);
+          localStorage.setItem("token", response.data);
           history.push("/");
+          window.location.reload()
         })
         .catch((error) => {
           console.log(error);

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { subscriptions, roles, user_status } from "../../../utils/consts";
 import { DateToFormat } from "../../../utils/dateFormat";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
-import {AuthContext} from "../../../App";
 
 import {
   StyledList,
@@ -54,7 +53,6 @@ import {
 } from "@fluentui/react-icons";
 
 const UserDetailsWrapper = ({ match }) => {
-  const user = useContext(AuthContext)
   const [data, setData] = useState();
   const [providers, setProviders] = useState();
   const [loading, setLoading] = useState(false);
@@ -83,7 +81,7 @@ const UserDetailsWrapper = ({ match }) => {
   };
   useEffect(() => {
     fetchUsers();
-  }, [user]);
+  }, []);
   return (
     <StyledUsersContainer>
       <Breadcrumbs

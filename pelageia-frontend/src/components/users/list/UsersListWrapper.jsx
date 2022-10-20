@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import MainTitle from "../../elements/styledTitle/MainTitle";
 import { subscriptions, roles } from "../../../utils/consts";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
 import { DateToFormat } from "../../../utils/dateFormat";
-import {AuthContext} from "../../../App";
 
 import { StyledUsersContainer } from "../styledUsers";
 import {
@@ -29,7 +27,6 @@ import {
 import { MoreVertical24Regular } from "@fluentui/react-icons";
 
 const UsersListWrapper = () => {
-  const user = useContext(AuthContext)
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -68,7 +65,7 @@ const UsersListWrapper = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [user]);
+  }, []);
   return (
     <StyledUsersContainer>
       <Breadcrumbs current="Users" />

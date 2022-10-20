@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import Logo from "../logo/Logo";
-import routes from "../../../routes/routes";
+import { HeaderContext } from "../../../App";
 import { NavLink, useHistory } from "react-router-dom";
+import { getMe } from "../../../utils/getMe";
+import { initLogout } from "../../../utils/logoutEvent";
 
 import {
   StyledHeaderWrapper,
@@ -10,13 +12,12 @@ import {
   StyledHeaderLink,
   StyledHeaderMenuItem,
 } from "./styledHeader";
-import { Button } from "@fluentui/react-components";
+import { Button, Menu, MenuTrigger, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
 import { Person24Regular } from "@fluentui/react-icons";
-import { AuthContext } from "../../../App";
 
 const Header = () => {
   const history = useHistory();
-  const user = useContext(AuthContext);
+  const routes = useContext(HeaderContext);
   return (
     <StyledHeaderWrapper>
       <StyledHeaderContainer>
@@ -34,15 +35,30 @@ const Header = () => {
             </StyledHeaderMenuItem>
           ))}
         </StyledHeaderMenu>
-        {user ? (
-          <Button
-            onClick={() => history.push("/")}
-            shape="circular"
-            className="login-btn"
-            appearance="transparent"
-          >
-            {user[0]}
-          </Button>
+        {getMe() !== null ? (
+          <Menu>
+            <MenuTrigger>
+              <Button
+                shape="circular"
+                className="login-btn"
+                appearance="transparent"
+              >
+                {getMe().name}
+              </Button>
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => history.push("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem
+                onClick={() =>initLogout()}
+                >
+                  Sign out
+                  </MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
         ) : (
           <Button
             onClick={() => history.push("/login")}

@@ -21,7 +21,7 @@ const responseStatus = {
 
 const roles = {
   3: "Superadmin",
-  2: "Administrator",
+  2: "Admin",
   1: "Client",
   0: "Guest"
 };
