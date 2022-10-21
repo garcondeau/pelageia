@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../logo/Logo";
-import routes from "../../../routes/routes";
+import { HeaderContext } from "../../../App";
+import { NavLink, useHistory } from "react-router-dom";
+import { getMe } from "../../../utils/getMe";
+import { initLogout } from "../../../utils/logoutEvent";
 
 import {
   StyledHeaderWrapper,
@@ -9,15 +12,19 @@ import {
   StyledHeaderLink,
   StyledHeaderMenuItem,
 } from "./styledHeader";
-import { Button } from "@fluentui/react-components";
+import { Button, Menu, MenuTrigger, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
 import { Person24Regular } from "@fluentui/react-icons";
 
 const Header = () => {
+  const history = useHistory();
+  const routes = useContext(HeaderContext);
   return (
     <StyledHeaderWrapper>
       <StyledHeaderContainer>
         <StyledHeaderMenu>
-          <Logo />
+          <NavLink style={{ textDecoration: "none" }} to="/">
+            <Logo />
+          </NavLink>
           {routes.map((route, key) => (
             <StyledHeaderMenuItem key={key}>
               {route.menu && (
@@ -28,12 +35,39 @@ const Header = () => {
             </StyledHeaderMenuItem>
           ))}
         </StyledHeaderMenu>
-        <Button
-          shape="circular"
-          className="login-btn"
-          appearance="transparent"
-          icon={<Person24Regular />}
-        />
+        {getMe() !== null ? (
+          <Menu>
+            <MenuTrigger>
+              <Button
+                shape="circular"
+                className="login-btn"
+                appearance="transparent"
+              >
+                {getMe().name}
+              </Button>
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => history.push("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem
+                onClick={() =>initLogout()}
+                >
+                  Sign out
+                  </MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        ) : (
+          <Button
+            onClick={() => history.push("/login")}
+            shape="circular"
+            className="login-btn"
+            appearance="transparent"
+            icon={<Person24Regular />}
+          />
+        )}
       </StyledHeaderContainer>
     </StyledHeaderWrapper>
   );
