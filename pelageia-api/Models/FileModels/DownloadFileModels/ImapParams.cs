@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pelageia_api.Models.FileModels
+namespace pelageia_api.Models.FileModels.DownloadFileModels
 {
     public class ImapParams
     {

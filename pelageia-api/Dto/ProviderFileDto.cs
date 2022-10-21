@@ -9,7 +9,7 @@ namespace pelageia_api.Dto
         public FileTypes FileType { get; set; }
         public CompressionTypes CompressionType {get; set;}
         public string FileUrl { get; set; } = string.Empty;
-        public char Separator { get; set; } = ';';
+        public SeparatorTypes Separator { get; set; }
         public string UseCols { get; set; } = string.Empty;
         public string Columns { get; set; } = string.Empty;
     }

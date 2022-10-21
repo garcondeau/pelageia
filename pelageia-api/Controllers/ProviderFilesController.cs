@@ -22,13 +22,22 @@ namespace pelageia_api.Controllers
             return Ok(providerFiles);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetFile(int id)
+        {
+            var providerFile = await _context.ProviderFiles.FindAsync(id);
+
+            return Ok(providerFile);
+        }
+
         [HttpPost]
         public async Task<ActionResult> AppendFile(ProviderFileDto file)
         {
             var provider = await _context.Providers.FindAsync(file.ProviderId);
-            if(provider is null)
+            if (provider is null)
                 return BadRequest("File provider not found");
-            var providerFile = new ProviderFile{
+            var providerFile = new ProviderFile
+            {
                 ProviderId = file.ProviderId,
                 FileName = file.FileName,
                 FileType = file.FileType,
@@ -42,6 +51,24 @@ namespace pelageia_api.Controllers
             await _context.ProviderFiles.AddAsync(providerFile);
             await _context.SaveChangesAsync();
             return Ok(file);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateFile(ProviderFile file)
+        {
+            var providerFile = await _context.ProviderFiles.FindAsync(file.Id);
+            if (providerFile is null)
+                return BadRequest("Provider File not found");
+
+            providerFile.FileName = file.FileName;
+            providerFile.Columns = file.Columns;
+            providerFile.CompressionType = file.CompressionType;
+            providerFile.Download = file.Download;
+            providerFile.DownloadFiles = file.DownloadFiles;
+            providerFile.FileType = file.FileType;
+            providerFile.UseCols = file.UseCols;
+
+            return Ok(providerFile);
         }
     }
 }

@@ -16,11 +16,13 @@ namespace pelageia_api.Controllers
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
-        public AuthController(AppDbContext context, IConfiguration configuration, IUserService userService)
+        private readonly IMailService _mailService;
+        public AuthController(AppDbContext context, IConfiguration configuration, IUserService userService, IMailService mailService)
         {
             _context = context;
             _configuration = configuration;
             _userService = userService;
+            _mailService = mailService;
         }
 
 
@@ -46,31 +48,52 @@ namespace pelageia_api.Controllers
                 Subscription = 0,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                EmailCode = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                EmailCode = GenerateEmailCode(),
             };
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+            var email = new EmailDto
+            {
+                To = user.Email,
+                Subject = "Pelageia Email Verification Code",
+                Body = $"Your Email Verification Code {user.EmailCode}"
+            };
+
+            _mailService.SendEmail(email);
+
+            return Ok(user);
+        }
+
+        [HttpPost("activate")]
+        public async Task<ActionResult> Activate(int userId, string code)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user is null)
+                return BadRequest("User not found");
+            if (!VerifyEmailCode(user.EmailCode, code))
+                return BadRequest("Email verification code is not correct");
+            user.IsActive = true;
+            await _context.SaveChangesAsync();
             return Ok(user);
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(string email, string password)
         {
-            bool exist = _context.Users.Any(u => u.Email.Equals(email));
+            bool exist = await _context.Users.AnyAsync(u => u.Email.Equals(email));
 
             if (!exist)
-            {
                 return BadRequest("Bad credentials.");
-            }
 
-            var user = _context.Users.Single(u => u.Email.Equals(email));
+            var user = await _context.Users.SingleAsync(u => u.Email.Equals(email));
 
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            {
                 return BadRequest("Wrong password.");
-            }
+
+            if (!user.IsActive)
+                return BadRequest("User is not active, please confirm email");
 
             var token = CreateToken(user);
 
@@ -126,6 +149,27 @@ namespace pelageia_api.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        private string GenerateEmailCode()
+        {
+            var chars = "0123456789";
+            var stringChars = new char[6];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new String(stringChars);
+        }
+
+        private bool VerifyEmailCode(string userCode, string RequestCode)
+        {
+            if (!userCode.Equals(RequestCode))
+                return false;
+            return true;
         }
     }
 }

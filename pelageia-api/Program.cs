@@ -1,6 +1,7 @@
 global using pelageia_api.Data;
 global using Microsoft.EntityFrameworkCore;
 global using pelageia_api.Services.UserServices;
+global using pelageia_api.Services.MailService;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

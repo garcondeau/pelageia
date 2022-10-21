@@ -22,7 +22,7 @@ namespace pelageia_api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFile", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,15 +39,20 @@ namespace pelageia_api.Migrations
                     b.Property<int?>("ImapParamsId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProviderFileId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UrlParamsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProviderFileId");
+
                     b.ToTable("DownloadFiles");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.FtpParams", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.FtpParams", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +87,7 @@ namespace pelageia_api.Migrations
                     b.ToTable("FtpParams");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.ImapParams", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.ImapParams", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,57 +118,7 @@ namespace pelageia_api.Migrations
                     b.ToTable("ImapParams");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.ProviderFile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Columns")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompressionType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DownloadFileId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("DownloadFiles")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FileType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProviderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Separator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.Property<string>("UseCols")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProviderId");
-
-                    b.ToTable("ProviderFiles");
-                });
-
-            modelBuilder.Entity("pelageia_api.Models.FileModels.UrlParams", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.UrlParams", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,6 +143,54 @@ namespace pelageia_api.Migrations
                         .HasFilter("[DownloaFileId] IS NOT NULL");
 
                     b.ToTable("UrlParams");
+                });
+
+            modelBuilder.Entity("pelageia_api.Models.FileModels.ProviderFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Columns")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CompressionType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Download")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("DownloadFileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Separator")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UseCols")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("ProviderFiles");
                 });
 
             modelBuilder.Entity("pelageia_api.Models.ProviderModels.Provider", b =>
@@ -321,20 +324,36 @@ namespace pelageia_api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.FtpParams", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", b =>
                 {
-                    b.HasOne("pelageia_api.Models.FileModels.DownloadFile", "DownloadFile")
+                    b.HasOne("pelageia_api.Models.FileModels.ProviderFile", null)
+                        .WithMany("DownloadFiles")
+                        .HasForeignKey("ProviderFileId");
+                });
+
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.FtpParams", b =>
+                {
+                    b.HasOne("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", "DownloadFile")
                         .WithOne("FtpParams")
-                        .HasForeignKey("pelageia_api.Models.FileModels.FtpParams", "DownloaFileId");
+                        .HasForeignKey("pelageia_api.Models.FileModels.DownloadFileModels.FtpParams", "DownloaFileId");
 
                     b.Navigation("DownloadFile");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.ImapParams", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.ImapParams", b =>
                 {
-                    b.HasOne("pelageia_api.Models.FileModels.DownloadFile", "DownloadFile")
+                    b.HasOne("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", "DownloadFile")
                         .WithOne("ImapParams")
-                        .HasForeignKey("pelageia_api.Models.FileModels.ImapParams", "DownloaFileId");
+                        .HasForeignKey("pelageia_api.Models.FileModels.DownloadFileModels.ImapParams", "DownloaFileId");
+
+                    b.Navigation("DownloadFile");
+                });
+
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.UrlParams", b =>
+                {
+                    b.HasOne("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", "DownloadFile")
+                        .WithOne("UrlParams")
+                        .HasForeignKey("pelageia_api.Models.FileModels.DownloadFileModels.UrlParams", "DownloaFileId");
 
                     b.Navigation("DownloadFile");
                 });
@@ -348,15 +367,6 @@ namespace pelageia_api.Migrations
                         .IsRequired();
 
                     b.Navigation("Provider");
-                });
-
-            modelBuilder.Entity("pelageia_api.Models.FileModels.UrlParams", b =>
-                {
-                    b.HasOne("pelageia_api.Models.FileModels.DownloadFile", "DownloadFile")
-                        .WithOne("UrlParams")
-                        .HasForeignKey("pelageia_api.Models.FileModels.UrlParams", "DownloaFileId");
-
-                    b.Navigation("DownloadFile");
                 });
 
             modelBuilder.Entity("pelageia_api.Models.ProviderModels.Provider", b =>
@@ -392,13 +402,18 @@ namespace pelageia_api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFile", b =>
+            modelBuilder.Entity("pelageia_api.Models.FileModels.DownloadFileModels.DownloadFile", b =>
                 {
                     b.Navigation("FtpParams");
 
                     b.Navigation("ImapParams");
 
                     b.Navigation("UrlParams");
+                });
+
+            modelBuilder.Entity("pelageia_api.Models.FileModels.ProviderFile", b =>
+                {
+                    b.Navigation("DownloadFiles");
                 });
 
             modelBuilder.Entity("pelageia_api.Models.ProviderModels.Provider", b =>
