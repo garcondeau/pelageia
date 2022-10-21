@@ -11,9 +11,11 @@ namespace pelageia_api.Controllers
     public class ProvidersController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public ProvidersController(AppDbContext context)
+        private readonly IUserService _userService;
+        public ProvidersController(AppDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -35,9 +37,16 @@ namespace pelageia_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertProvider(Provider provider)
+        public async Task<IActionResult> InsertProvider(string name)
         {
-            provider.User = await _context.Users.FindAsync(provider.UserId);
+            var user = _userService.GetMe();
+            var provider = new Provider{
+                UserId = user.Id,
+                Name = name,
+                CreatedAt = DateTime.Now,
+                IsActive = true,
+                Deleted = false
+            };
             _context.Add(provider);
             await _context.SaveChangesAsync();
             return Ok(await _context.Providers.ToListAsync());

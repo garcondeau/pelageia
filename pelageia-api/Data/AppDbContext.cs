@@ -2,6 +2,7 @@ global using pelageia_api.Models.UserModels;
 global using pelageia_api.Models.ProviderModels;
 global using pelageia_api.Models.FileModels;
 global using pelageia_api.Models.SubscriptionModels;
+global using pelageia_api.Models.FileModels.DownloadFileModels;
 
 namespace pelageia_api.Data
 {
