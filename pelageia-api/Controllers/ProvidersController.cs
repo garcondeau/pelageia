@@ -18,16 +18,17 @@ namespace pelageia_api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetProviders()
         {
             return Ok(await _context.Providers.ToListAsync());
         }
 
-        [HttpGet("user/{userId}")]
-        public ActionResult GetUserProviders(int userId)
+        [HttpGet]
+        public ActionResult GetUserProviders()
         {
-            return Ok(_context.Providers.Where(p => p.UserId == userId));
+            var user = _userService.GetMe();
+            return Ok(_context.Providers.Where(p => p.UserId == user.Id));
         }
 
         [HttpGet("{id}")]

@@ -14,10 +14,12 @@ namespace pelageia_api.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetFiles()
+        [HttpGet("{providerId}")]
+        public ActionResult GetFiles(int providerId)
         {
-            var providerFiles = await _context.ProviderFiles.ToListAsync();
+            var providerFiles = _context.ProviderFiles.Where(pf => pf.ProviderId == providerId);
+            if(providerFiles is null)
+                return BadRequest("Provider not found");
 
             return Ok(providerFiles);
         }
@@ -60,15 +62,30 @@ namespace pelageia_api.Controllers
             if (providerFile is null)
                 return BadRequest("Provider File not found");
 
+            providerFile.FileUrl = file.FileUrl;
             providerFile.FileName = file.FileName;
-            providerFile.Columns = file.Columns;
+            providerFile.FileType = file.FileType;
             providerFile.CompressionType = file.CompressionType;
+            providerFile.Separator = file.Separator;
             providerFile.Download = file.Download;
             providerFile.DownloadFiles = file.DownloadFiles;
-            providerFile.FileType = file.FileType;
             providerFile.UseCols = file.UseCols;
+            providerFile.Columns = file.Columns;
 
             return Ok(providerFile);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteFile(int id)
+        {
+            var providerFile = await _context.ProviderFiles.FindAsync(id);
+            if (providerFile is null)
+                return BadRequest("Provider File not found");
+
+            _context.Remove(providerFile);
+            await _context.SaveChangesAsync();
+
+            return Ok("Provider File Deleted");
         }
     }
 }
