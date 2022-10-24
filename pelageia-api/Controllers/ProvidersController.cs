@@ -19,6 +19,7 @@ namespace pelageia_api.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Admin")]
+        [Route("list")]
         public async Task<IActionResult> GetProviders()
         {
             return Ok(await _context.Providers.ToListAsync());
