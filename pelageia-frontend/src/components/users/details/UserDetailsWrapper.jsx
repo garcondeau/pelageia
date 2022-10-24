@@ -41,6 +41,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Alert,
 } from "@fluentui/react-components/unstable";
 import {
   Mail16Regular,
@@ -88,7 +89,9 @@ const UserDetailsWrapper = ({ match }) => {
         previous="Users"
         link="/panel/users"
       />
-      {loading && <Spinner labelPosition="below" size="medium" label="Loading" />}
+      {loading && (
+        <Spinner labelPosition="below" size="medium" label="Loading" />
+      )}
       {!loading && data && (
         <StyledUserCard className="user">
           <StyledUserPreview>
@@ -100,14 +103,14 @@ const UserDetailsWrapper = ({ match }) => {
                 positioning="after-bottom"
               >
                 <Avatar
-                  name={data.userName}
+                  name={data.name}
                   badge={{ status: user_status[data.isActive]["badge"] }}
                   color="colorful"
                   size="72"
                 />
               </Tooltip>
               <div className="user__creds">
-                <Title1 block>{data.userName}</Title1>
+                <Title1 block>{data.name}</Title1>
                 <Caption1 className="user__email" block>
                   <Mail16Regular />
                   {data.email}
@@ -157,7 +160,7 @@ const UserDetailsWrapper = ({ match }) => {
                   </StyledListRow>
                   <StyledListRow>
                     <StyledListCell>User name:</StyledListCell>
-                    <StyledListCell>{data.userName}</StyledListCell>
+                    <StyledListCell>{data.name}</StyledListCell>
                   </StyledListRow>
                   <StyledListRow>
                     <StyledListCell>User role:</StyledListCell>
@@ -200,7 +203,7 @@ const UserDetailsWrapper = ({ match }) => {
                   <Caption1 block>Show providers created by user</Caption1>
                 </div>
               </AccordionHeader>
-              <AccordionPanel>
+              <AccordionPanel  style={{padding: "30px 5px 15px"}}>
                 {!providers && (
                   <Spinner
                     labelPosition="below"
@@ -208,7 +211,7 @@ const UserDetailsWrapper = ({ match }) => {
                     label="Loading user providers"
                   />
                 )}
-                {providers && (
+                {providers && (providers.length > 0) ? (
                   <Table className="user-providers-table">
                     <TableHeader>
                       <TableRow>
@@ -249,6 +252,10 @@ const UserDetailsWrapper = ({ match }) => {
                       ))}
                     </TableBody>
                   </Table>
+                ) : (
+                  <Alert intent="warning">
+                    No providers for this user
+                  </Alert>
                 )}
               </AccordionPanel>
             </StyledUserProp>

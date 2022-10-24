@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import MainTitle from "../../elements/styledTitle/MainTitle";
 import { subscriptions, roles } from "../../../utils/consts";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
@@ -51,7 +50,6 @@ const UsersListWrapper = () => {
     .put(`/api/Users/change_active/${id}`)
     .then((response) => {
       if (response.status == "200") {
-        console.log("Status changed");
         setDisabled(false);
       }
       else {
@@ -62,7 +60,6 @@ const UsersListWrapper = () => {
 
   const handleStatus = ({ e, user }) => {
     setDisabled(true);
-    console.log(user)
     setUserStatus(user);
   };
 
@@ -99,7 +96,7 @@ const UsersListWrapper = () => {
                   />
                 </TableCell>
                 <TableCell>{user.id}</TableCell>
-                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.name}</TableCell>
                 <TableCell>{roles[user.role]}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.phone}</TableCell>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import MainTitle from "../../elements/styledTitle/MainTitle";
 import Breadcrumbs from "../../elements/breadcrumbs/Breadcrumbs";
 import { NavLink } from "react-router-dom";
 import { DateToFormat } from "../../../utils/dateFormat";
@@ -63,7 +62,6 @@ const ProvidersListWrapper = () => {
   const setProviderStatus = (id) => {
     axios.put(`/api/Providers/change_active/${id}`).then((response) => {
       if (response.status == "200") {
-        console.log("Status changed");
         setDisabled(false);
       } else {
         fetchUsers();
