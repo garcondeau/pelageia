@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+using pelageia_api.Models.FileModels;
 
 namespace pelageia_api.Controllers
 {
@@ -12,12 +15,19 @@ namespace pelageia_api.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetProviderDataFrames(int providerId)
+        [HttpGet("{providerId}")]
+        public ActionResult GetProviderParams(int providerId)
         {
-            var providerFiles = await _context.Providers.FindAsync(providerId);
+            var providerFiles = _context.ProviderFiles.Where(pf => pf.ProviderId == providerId);
 
-            return Ok(providerFiles);
+            ScriptEngine engine = Python.CreateEngine();
+            ScriptScope scope = engine.CreateScope();
+            scope.SetVariable("provider_files", providerFiles);
+            engine.ExecuteFile("../../pelageia/pelageia-core/script.py", scope);
+
+            dynamic files = scope.GetVariable("provider_files");
+
+            return Ok(files);
         }
     }
 }
