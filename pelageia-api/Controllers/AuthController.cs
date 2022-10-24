@@ -67,9 +67,9 @@ namespace pelageia_api.Controllers
         }
 
         [HttpPost("activate")]
-        public async Task<ActionResult> Activate(int userId, string code)
+        public async Task<ActionResult> Activate(string userEmail, string code)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.Users.SingleAsync(u => u.Email.Equals(userEmail));
             if (user is null)
                 return BadRequest("User not found");
             if (!VerifyEmailCode(user.EmailCode, code))

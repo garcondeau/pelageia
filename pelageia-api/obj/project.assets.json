@@ -2863,26 +2863,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "/Users/garcondeau/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\src\\cs\\pelageia\\pelageia-api\\PelageiaAPI.csproj",
+      "projectUniqueName": "/Users/garcondeau/Documents/GitHub/pelageia/pelageia-api/PelageiaAPI.csproj",
       "projectName": "PelageiaAPI",
-      "projectPath": "D:\\src\\cs\\pelageia\\pelageia-api\\PelageiaAPI.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\src\\cs\\pelageia\\pelageia-api\\obj\\",
+      "projectPath": "/Users/garcondeau/Documents/GitHub/pelageia/pelageia-api/PelageiaAPI.csproj",
+      "packagesPath": "/Users/garcondeau/.nuget/packages/",
+      "outputPath": "/Users/garcondeau/Documents/GitHub/pelageia/pelageia-api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/garcondeau/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2951,7 +2949,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
       }
     }
   }
